@@ -1,8 +1,8 @@
-package com.example.kelownahive.category;
+package com.example.kelownahiveapp.category;
 
 public class CategoryItem {
-    private String name;
-    private int iconResId;
+    private final String name;
+    private final int iconResId;
 
     public CategoryItem(String name, int iconResId) {
         this.name = name;

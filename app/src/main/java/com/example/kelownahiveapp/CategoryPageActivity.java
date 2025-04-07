@@ -1,21 +1,15 @@
-package com.example.kelownahive.category;
+package com.example.kelownahiveapp.category;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.kelownahive.R;
-
+import com.example.kelownahiveapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryPageActivity extends AppCompatActivity implements CategoryAdapter.OnCategoryClickListener {
-
     private RecyclerView categoryRecyclerView;
     private CategoryAdapter categoryAdapter;
     private List<CategoryItem> categoryList;
@@ -41,6 +35,5 @@ public class CategoryPageActivity extends AppCompatActivity implements CategoryA
     @Override
     public void onCategoryClick(String categoryName) {
         Toast.makeText(this, "Selected: " + categoryName, Toast.LENGTH_SHORT).show();
-        // Future intent to open filtered list
     }
 }

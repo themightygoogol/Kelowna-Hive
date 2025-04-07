@@ -1,22 +1,18 @@
-package com.example.kelownahive.category;
+package com.example.kelownahiveapp.category;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.kelownahive.R;
-
+import com.example.kelownahiveapp.R;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
-
-    private List<CategoryItem> categories;
-    private OnCategoryClickListener listener;
+    private final List<CategoryItem> categories;
+    private final OnCategoryClickListener listener;
 
     public interface OnCategoryClickListener {
         void onCategoryClick(String categoryName);
