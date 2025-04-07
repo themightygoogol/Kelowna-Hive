@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#FFFDF5">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Event Title without custom font -->
+        <!-- Event Title -->
         <TextView
             android:id="@+id/tvEventTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sunday Football Watch Party"
-            android:textStyle="bold"
+            android:text="Event Title"
             android:textSize="24sp"
-            android:textColor="#000000"
+            android:textStyle="bold"
             android:layout_gravity="center_horizontal" />
 
         <!-- Date & Time -->
@@ -28,8 +25,7 @@
             android:id="@+id/tvEventDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="May 5th, 2025 (6 PM - 9 PM PST)"
-            android:textSize="16sp"
+            android:text="Date &amp; Time"
             android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal" />
 
@@ -38,8 +34,7 @@
             android:id="@+id/tvEventLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location: Kelowna Downtown Library"
-            android:textSize="16sp"
+            android:text="Location"
             android:layout_marginTop="4dp"
             android:layout_gravity="center_horizontal" />
 
@@ -49,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="RSVP: Open to All"
-            android:textSize="16sp"
             android:layout_marginTop="4dp"
             android:layout_gravity="center_horizontal" />
 
@@ -58,18 +52,53 @@
             android:id="@+id/tvEventDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae orci vitae eros ullamcorper..."
-            android:textSize="14sp"
+            android:text="Event Description"
             android:layout_marginTop="16dp" />
 
-        <!-- Swipe-based Image Slider using ViewPager2 -->
+        <!-- Image Slider -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="16dp" />
 
-        <!-- Action Button -->
+        <!-- Rating and Share Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnUpvote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upvote" />
+
+            <TextView
+                android:id="@+id/tvRatingCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+
+            <Button
+                android:id="@+id/btnDownvote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Downvote" />
+
+            <Button
+                android:id="@+id/btnShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                android:layout_marginLeft="16dp" />
+        </LinearLayout>
+
+        <!-- Request/Join Button -->
         <Button
             android:id="@+id/btnRequestJoin"
             android:layout_width="wrap_content"
@@ -78,5 +107,34 @@
             android:layout_marginTop="16dp"
             android:layout_gravity="center_horizontal" />
 
+        <!-- Comments Section -->
+        <TextView
+            android:id="@+id/tvCommentsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comments:"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/llComments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/etComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add a comment" />
+
+        <Button
+            android:id="@+id/btnPostComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post Comment"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </ScrollView>
