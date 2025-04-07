@@ -14,7 +14,9 @@ public class Event {
         this.description = description;
         this.imageResources = imageResources;
     }
-
+    public Event(String title, String dateTime, String location, String description) {
+        this(title, dateTime, location, description, null);
+    }
     public String getTitle() {
         return title;
     }
