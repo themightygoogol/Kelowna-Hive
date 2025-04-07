@@ -1,4 +1,4 @@
-package com.example.kelownahiveapp.category;
+package com.example.kelownahiveapp;
 
 public class CategoryItem {
     private final String name;
