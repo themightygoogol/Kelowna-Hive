@@ -25,10 +25,18 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         Button mainPageButton = findViewById(R.id.goToMain);
+        Button postButton = findViewById(R.id.button_post);
         mainPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MainPageLayout.class);
+                startActivity(intent);
+            }
+        });
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PostEvent.class);
                 startActivity(intent);
             }
         });
