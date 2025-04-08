@@ -1,8 +1,6 @@
 package com.example.kelownahiveapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,32 +12,33 @@ import com.example.kelownahiveapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryPageActivity extends AppCompatActivity implements CategoryAdapter.OnCategoryClickListener {
+public class CategoryPageActivity extends AppCompatActivity implements EventAdapter.OnEventClickListener {
 
-    private RecyclerView categoryRecyclerView;
-    private CategoryAdapter categoryAdapter;
-    private List<CategoryItem> categoryList;
+    private RecyclerView eventRecyclerView;
+    private EventAdapter eventAdapter;
+    private List<EventItem> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_page);
 
-        categoryRecyclerView = findViewById(R.id.categoryRecyclerView);
-        categoryRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        eventRecyclerView = findViewById(R.id.eventRecyclerView);
+        eventRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        categoryList = new ArrayList<>();
-        categoryList.add(new CategoryItem("Events", R.drawable.ic_event));
-        categoryList.add(new CategoryItem("Services", R.drawable.ic_services));
-        categoryList.add(new CategoryItem("Lost & Found", R.drawable.ic_lostfound));
-        categoryList.add(new CategoryItem("Miscellaneous", R.drawable.ic_misc));
+        eventList = new ArrayList<>();
+        eventList.add(new EventItem("Color Run 5K", R.drawable.note_orange));
+        eventList.add(new EventItem("Senior Basketball Night", R.drawable.note_blue));
+        eventList.add(new EventItem("Glow-in-the-dark Zumba", R.drawable.note_pink));
+        eventList.add(new EventItem("Community Soccer Game", R.drawable.note_green));
+        eventList.add(new EventItem("Archery Tryouts", R.drawable.note_purple));
 
-        categoryAdapter = new CategoryAdapter(categoryList, this);
-        categoryRecyclerView.setAdapter(categoryAdapter);
+        eventAdapter = new EventAdapter(eventList, this);
+        eventRecyclerView.setAdapter(eventAdapter);
     }
 
     @Override
-    public void onCategoryClick(String categoryName) {
-        Toast.makeText(this, "Selected: " + categoryName, Toast.LENGTH_SHORT).show();
+    public void onEventClick(String eventName) {
+        Toast.makeText(this, "Clicked: " + eventName, Toast.LENGTH_SHORT).show();
     }
 }
