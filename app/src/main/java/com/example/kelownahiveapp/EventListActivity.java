@@ -27,11 +27,13 @@ public class EventListActivity extends AppCompatActivity {
                 "May 5th, 2025 (6 PM - 9 PM PST)",
                 "Kelowna Downtown Library",
                 "Join us for a fun football watch party at the library.",
+                "Meet up",
                 new int[]{R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground}));
         eventList.add(new Event("Art & Wine Night",
                 "June 10th, 2025 (7 PM - 10 PM PST)",
                 "Kelowna Art Gallery",
                 "Enjoy a night of art and wine with local artists.",
+                "Art",
                 new int[]{R.drawable.ic_launcher_foreground, R.drawable.ic_launcher_foreground}));
         // Add more events as needed
 
