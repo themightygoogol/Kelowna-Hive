@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.kelownahiveapp"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.kelownahiveapp"
-        minSdk = 21      // Adjust this value if needed for your app's requirements
-        targetSdk = 33
+        minSdk = 35
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
