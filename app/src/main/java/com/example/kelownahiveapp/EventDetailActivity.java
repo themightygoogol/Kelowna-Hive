@@ -21,30 +21,38 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
-        // Retrieve event data from the intent extras with null-checks
+        // Retrieve event data from the intent extras
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String dateTime = intent.getStringExtra("dateTime");
-        String location = intent.getStringExtra("location");
-        String description = intent.getStringExtra("description");
 
-        // Provide default values if any extra is missing
-        if (title == null) {
-            title = "Untitled Event";
+        // Use temporary variables to allow reassignment
+        String tempTitle = intent.getStringExtra("title");
+        if (tempTitle == null) {
+            tempTitle = "Untitled Event";
             Log.e("EventDetailActivity", "Title extra is null. Using default.");
         }
-        if (dateTime == null) {
-            dateTime = "Unknown Date/Time";
+        // Make the variable final for inner class access
+        final String title = tempTitle;
+
+        String tempDateTime = intent.getStringExtra("dateTime");
+        if (tempDateTime == null) {
+            tempDateTime = "Unknown Date/Time";
             Log.e("EventDetailActivity", "DateTime extra is null. Using default.");
         }
-        if (location == null) {
-            location = "Unknown Location";
+        final String dateTime = tempDateTime;
+
+        String tempLocation = intent.getStringExtra("location");
+        if (tempLocation == null) {
+            tempLocation = "Unknown Location";
             Log.e("EventDetailActivity", "Location extra is null. Using default.");
         }
-        if (description == null) {
-            description = "No description available.";
+        final String location = tempLocation;
+
+        String tempDescription = intent.getStringExtra("description");
+        if (tempDescription == null) {
+            tempDescription = "No description available.";
             Log.e("EventDetailActivity", "Description extra is null. Using default.");
         }
+        final String description = tempDescription;
 
         // Retrieve image resources, falling back if null
         eventImages = intent.getIntArrayExtra("imageResources");
