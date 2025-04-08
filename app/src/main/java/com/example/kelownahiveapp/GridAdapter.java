@@ -46,22 +46,28 @@ public class GridAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.grid_item, parent, false);
 
-            // Set fixed width/height for square items
-            convertView.setLayoutParams(new GridView.LayoutParams(itemWidth, itemWidth));
+            // set fixed width and height for square items
+            convertView.setLayoutParams(new GridView.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    (int) (parent.getWidth() * 0.45) // 45% of parent width for height
+            ));
         }
 
-        ImageView image = convertView.findViewById(R.id.sticky);
+        ImageButton eventButton = convertView.findViewById(R.id.sticky);
         TextView title = convertView.findViewById(R.id.eventName);
 
         Event event = getItem(position);
         title.setText(event.getTitle());
-
-        if (event.getImageResources() != null && event.getImageResources().length > 0) {
-            image.setImageResource(event.getImageResources()[0]);
+        int randomNumber = (int)(Math.random() * 4);
+        if (randomNumber == 1) {
+            eventButton.setImageResource(R.drawable.light_blue_sticky_note);
+        } else if (randomNumber == 2) {
+            eventButton.setImageResource(R.drawable.purple_sticky_note);
+        } else if (randomNumber == 3) {
+            eventButton.setImageResource(R.drawable.orange_sticky_note);
         } else {
-            image.setImageResource(R.drawable.light_blue_sticky_note);
+            eventButton.setImageResource(R.drawable.yellow_sticky_note);
         }
-
         convertView.setOnClickListener(v -> {
             Intent intent = new Intent(context, EventDetailActivity.class);
             intent.putExtra("EVENT_JSON", new Gson().toJson(event));
