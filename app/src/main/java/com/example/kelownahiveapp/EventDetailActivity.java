@@ -2,6 +2,7 @@ package com.example.kelownahiveapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +21,32 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
-        // Retrieve event data from the intent extras
+        // Retrieve event data from the intent extras with null-checks
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String dateTime = intent.getStringExtra("dateTime");
         String location = intent.getStringExtra("location");
         String description = intent.getStringExtra("description");
+
+        // Provide default values if any extra is missing
+        if (title == null) {
+            title = "Untitled Event";
+            Log.e("EventDetailActivity", "Title extra is null. Using default.");
+        }
+        if (dateTime == null) {
+            dateTime = "Unknown Date/Time";
+            Log.e("EventDetailActivity", "DateTime extra is null. Using default.");
+        }
+        if (location == null) {
+            location = "Unknown Location";
+            Log.e("EventDetailActivity", "Location extra is null. Using default.");
+        }
+        if (description == null) {
+            description = "No description available.";
+            Log.e("EventDetailActivity", "Description extra is null. Using default.");
+        }
+
+        // Retrieve image resources, falling back if null
         eventImages = intent.getIntArrayExtra("imageResources");
         if (eventImages == null) {
             eventImages = new int[]{R.drawable.ic_launcher_foreground};
