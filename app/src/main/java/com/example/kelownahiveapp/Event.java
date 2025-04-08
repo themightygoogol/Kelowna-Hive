@@ -14,6 +14,7 @@ public class Event {
         this.location = location;
         this.description = description;
         this.imageResources = imageResources;
+        this.category = category;
     }
     public Event(String title, String dateTime, String location, String description, String category) {
         this(title, dateTime, location, description,category ,null);
