@@ -37,4 +37,5 @@ public class Event {
     public int[] getImageResources() {
         return imageResources;
     }
+    public String getCategory() {return category;}
 }

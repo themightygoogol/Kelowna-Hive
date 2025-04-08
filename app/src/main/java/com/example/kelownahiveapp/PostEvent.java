@@ -144,7 +144,6 @@ public class PostEvent extends AppCompatActivity {
             File file = new File(getFilesDir(), EVENTS_FILE);
             List<Event> events;
 
-            // If the file exists, read the existing events; otherwise, initialize a new list.
             if (file.exists()) {
                 FileInputStream fis = new FileInputStream(file);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
