@@ -2,9 +2,11 @@ package com.example.kelownahiveapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,8 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private int[] eventImages = null;
     private int ratingCount = 0; // initial rating
+    private ImageButton backButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class EventDetailActivity extends AppCompatActivity {
         String dateTime = intent.getStringExtra("dateTime");
         String location = intent.getStringExtra("location");
         String description = intent.getStringExtra("description");
+        String category = intent.getStringExtra("CATEGORY_NAME");
         eventImages = intent.getIntArrayExtra("imageResources");
         if (eventImages == null) {
             eventImages = new int[]{R.drawable.ic_launcher_foreground};
@@ -52,6 +57,17 @@ public class EventDetailActivity extends AppCompatActivity {
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         ImageSliderAdapter adapter = new ImageSliderAdapter(eventImages);
         viewPager.setAdapter(adapter);
+
+        backButton = findViewById(R.id.btnAddImage);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventDetailActivity.this, CategoryPage.class);
+                Log.d("BACKBUTTON", "Creating view for position: " + category);
+                intent.putExtra("CATEGORY_NAME", category);
+                startActivity(intent);
+            }
+        });
 
         // Join/Request button toggle functionality
         final Button btnRequestJoin = findViewById(R.id.btnRequestJoin);

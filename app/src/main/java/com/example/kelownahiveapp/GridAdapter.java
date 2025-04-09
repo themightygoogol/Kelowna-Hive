@@ -20,11 +20,13 @@ public class GridAdapter extends BaseAdapter {
     private Context context;
     private List<Event> events;
     private int itemWidth;
+    private String category;
 
-    public GridAdapter(Context context, List<Event> events, int columnWidth) {
+    public GridAdapter(Context context, List<Event> events, int columnWidth, String category) {
         this.context = context;
         this.events = events;
         this.itemWidth = columnWidth;
+        this.category = category;
     }
 
     @Override
@@ -89,6 +91,7 @@ public class GridAdapter extends BaseAdapter {
             intent.putExtra("location", event.getLocation());
             intent.putExtra("description", event.getDescription());
             intent.putExtra("imageResources", event.getImageResources());
+            intent.putExtra("CATEGORY_NAME", category);
 
             context.startActivity(intent);
         });
