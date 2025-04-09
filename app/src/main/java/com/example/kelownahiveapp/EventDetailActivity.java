@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +28,9 @@ public class EventDetailActivity extends AppCompatActivity {
     private int[] eventImages = null;
     private int ratingCount = 0; // initial rating
     private static final String EVENTS_FILE = "events.json";
-
+    // We'll use the event's title as our unique key for deletion.
     private String eventTitle;
+    private ImageButton backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +39,11 @@ public class EventDetailActivity extends AppCompatActivity {
 
         // Retrieve event data from the intent extras
         Intent intent = getIntent();
-        eventTitle = intent.getStringExtra("title");
+        eventTitle = intent.getStringExtra("title");  // Use "title" as key for deletion
         String dateTime = intent.getStringExtra("dateTime");
         String location = intent.getStringExtra("location");
         String description = intent.getStringExtra("description");
+        // Use the key "category" (adjust if your adapter uses a different one)
         String category = intent.getStringExtra("category");
         eventImages = intent.getIntArrayExtra("imageResources");
         if (eventImages == null) {
@@ -66,6 +69,21 @@ public class EventDetailActivity extends AppCompatActivity {
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         ImageSliderAdapter adapter = new ImageSliderAdapter(eventImages);
         viewPager.setAdapter(adapter);
+
+        // Back button functionality - assume an ImageButton with id "btnAddImage" is used as a back button.
+        backButton = findViewById(R.id.btnAddImage);
+        if (backButton != null) {
+            backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Navigate back to CategoryPage, passing the category name.
+                    Intent intent = new Intent(EventDetailActivity.this, CategoryPage.class);
+                    Log.d("BACKBUTTON", "Launching CategoryPage with category: " + category);
+                    intent.putExtra("CATEGORY_NAME", category);
+                    startActivity(intent);
+                }
+            });
+        }
 
         // Join/Request button toggle functionality
         final Button btnRequestJoin = findViewById(R.id.btnRequestJoin);
@@ -135,19 +153,19 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-
-            Button btnDelete = findViewById(R.id.btnDelete);
-
+        // Delete functionality: ensure a button with id "btnDelete" exists in your layout.
+        Button btnDelete = findViewById(R.id.btnDelete);
+        if (btnDelete != null) {
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     deleteEventByName();
                     Toast.makeText(EventDetailActivity.this, "Event deleted.", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK); // Signal to EventListActivity to refresh its list.
+                    setResult(RESULT_OK); // Signal that the list must be refreshed.
                     finish();
                 }
             });
-
+        }
     }
 
     // Deletes the event from internal storage based on its title.
@@ -174,14 +192,14 @@ public class EventDetailActivity extends AppCompatActivity {
             } else {
                 events = new ArrayList<>();
             }
-
+            
             // Debug: Log the stored event titles.
             Log.d("DeleteEvent", "Attempting to delete event with title: " + eventTitle);
             for (Event e : events) {
                 Log.d("DeleteEvent", "Stored event title: " + e.getTitle());
             }
-
-            // Remove the event matching the title (assumes title uniqueness).
+            
+            // Remove the event matching the title (assumes event titles are unique).
             boolean removed = false;
             for (int i = 0; i < events.size(); i++) {
                 if (events.get(i).getTitle() != null && events.get(i).getTitle().equals(eventTitle)) {
@@ -194,8 +212,8 @@ public class EventDetailActivity extends AppCompatActivity {
             if (!removed) {
                 Log.d("DeleteEvent", "No event found with title: " + eventTitle);
             }
-
-            // Save the updated events back to internal storage.
+            
+            // Save the updated events list back to internal storage.
             Gson gson = new Gson();
             String newJson = gson.toJson(events);
             FileOutputStream fos = new FileOutputStream(file);
