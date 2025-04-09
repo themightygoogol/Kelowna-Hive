@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">KelownaHiveApp</string>
+    <string name="discover_text">Discover What’s Buzzing in Kelowna!</string>
+    <string name="browse_events">Browse Events</string>
+    <string name="create_post">Create a post</string>
+
+
 </resources>
