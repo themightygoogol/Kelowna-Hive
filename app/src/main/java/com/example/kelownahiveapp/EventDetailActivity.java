@@ -27,7 +27,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private int[] eventImages = null;
     private int ratingCount = 0; // initial rating
     private static final String EVENTS_FILE = "events.json";
-    // Using event title as deletion key (assuming they are unique)
+
     private String eventTitle;
 
     @Override
@@ -135,9 +135,9 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Delete functionality: ensure a button with ID "btnDelete" exists in your layout.
-        Button btnDelete = findViewById(R.id.btnDelete);
-        if (btnDelete != null) {
+
+            Button btnDelete = findViewById(R.id.btnDelete);
+
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -147,7 +147,7 @@ public class EventDetailActivity extends AppCompatActivity {
                     finish();
                 }
             });
-        }
+
     }
 
     // Deletes the event from internal storage based on its title.
