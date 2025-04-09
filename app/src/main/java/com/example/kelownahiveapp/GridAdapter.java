@@ -47,37 +47,40 @@ public class GridAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.grid_item, parent, false);
             convertView.setLayoutParams(new GridView.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    (int) (parent.getWidth() * 0.45)
+                    itemWidth // Use the predefined width
             ));
         }
 
         ImageButton eventButton = convertView.findViewById(R.id.sticky);
         TextView title = convertView.findViewById(R.id.eventName);
 
+        // Make sure the button is properly configured
+        eventButton.setVisibility(View.VISIBLE);
+        eventButton.setScaleType(ImageView.ScaleType.FIT_XY);
+        eventButton.setClickable(false);
+        eventButton.setFocusable(false);
+
         Event event = getItem(position);
         title.setText(event.getTitle());
+
         int randomNumber = (int)(Math.random() * 4);
-        if (randomNumber == 1) {
-            eventButton.setImageResource(R.drawable.light_blue_sticky_note);
-        } else if (randomNumber == 2) {
-            eventButton.setImageResource(R.drawable.purple_sticky_note);
-        } else if (randomNumber == 3) {
-            eventButton.setImageResource(R.drawable.orange_sticky_note);
-        } else {
-            eventButton.setImageResource(R.drawable.yellow_sticky_note);
+        switch (randomNumber) {
+            case 1:
+                eventButton.setImageResource(R.drawable.light_blue_sticky_note);
+                break;
+            case 2:
+                eventButton.setImageResource(R.drawable.purple_sticky_note);
+                break;
+            case 3:
+                eventButton.setImageResource(R.drawable.orange_sticky_note);
+                break;
+            default:
+                eventButton.setImageResource(R.drawable.yellow_sticky_note);
         }
 
-        eventButton.setOnClickListener(v -> {
+        convertView.setOnClickListener(v -> {
             Intent intent = new Intent(context, EventDetailActivity.class);
-            // Remove FLAG_ACTIVITY_NEW_TASK if using Activity context
-            // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            intent.putExtra("title", event.getTitle());
-            intent.putExtra("dateTime", event.getDateTime());
-            intent.putExtra("location", event.getLocation());
-            intent.putExtra("description", event.getDescription());
-            intent.putExtra("imageResources", event.getImageResources());
-
+            intent.putExtra("EVENT", new Gson().toJson(event));
             context.startActivity(intent);
         });
 
