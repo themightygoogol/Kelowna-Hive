@@ -14,17 +14,9 @@
         android:theme="@style/Theme.KelownaHiveApp"
         tools:targetApi="31">
 
-        <activity
-            android:name=".EventListActivity"
-            android:exported="true"/>
-
-        <activity
-            android:name=".EventDetailActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+        <activity android:name=".EventListActivity" android:exported="true" />
+        <activity android:name=".EventDetailActivity" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,6 +24,9 @@
         </activity>
         <activity android:name=".MainPage" />
         <activity android:name=".PostEvent" />
-    </application>
 
+        <!-- ✅ Category Page Activity -->
+        <activity android:name=".category.CategoryPageActivity" />
+
+    </application>
 </manifest>
