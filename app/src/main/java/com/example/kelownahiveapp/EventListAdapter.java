@@ -2,6 +2,7 @@ package com.example.kelownahiveapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,15 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         Event event = eventList.get(position);
+
+        // For debugging, log the event's title
+        Log.d("EventListAdapter", "Binding event with title: " + event.getTitle());
+
         holder.tvItemTitle.setText(event.getTitle());
         holder.tvItemDateTime.setText(event.getDateTime());
         holder.tvItemLocation.setText(event.getLocation());
 
-        // Launch EventDetailActivity when tapped
+        // Launch EventDetailActivity when tapped, passing all event details
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, EventDetailActivity.class);
             intent.putExtra("title", event.getTitle());
@@ -43,7 +48,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             intent.putExtra("description", event.getDescription());
             intent.putExtra("category", event.getCategory());
             intent.putExtra("imageResources", event.getImageResources());
-            context.startActivity(intent);
+            ((EventListActivity) context).startActivityForResult(intent, 100);
         });
     }
 
