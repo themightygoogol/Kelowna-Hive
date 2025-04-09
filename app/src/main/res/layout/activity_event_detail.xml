@@ -153,12 +153,15 @@
             android:layout_height="wrap_content"
             android:text="Post Comment"
             android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/button_blue"
+            android:textColor="@color/button_text"/>
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete post" />
+            android:text="Delete post"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/button_blue"
             android:textColor="@color/button_text"/>
