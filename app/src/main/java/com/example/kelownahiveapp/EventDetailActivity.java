@@ -2,6 +2,7 @@ package com.example.kelownahiveapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,10 +23,38 @@ public class EventDetailActivity extends AppCompatActivity {
 
         // Retrieve event data from the intent extras
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String dateTime = intent.getStringExtra("dateTime");
-        String location = intent.getStringExtra("location");
-        String description = intent.getStringExtra("description");
+
+        // Use temporary variables to allow reassignment
+        String tempTitle = intent.getStringExtra("title");
+        if (tempTitle == null) {
+            tempTitle = "Untitled Event";
+            Log.e("EventDetailActivity", "Title extra is null. Using default.");
+        }
+        // Make the variable final for inner class access
+        final String title = tempTitle;
+
+        String tempDateTime = intent.getStringExtra("dateTime");
+        if (tempDateTime == null) {
+            tempDateTime = "Unknown Date/Time";
+            Log.e("EventDetailActivity", "DateTime extra is null. Using default.");
+        }
+        final String dateTime = tempDateTime;
+
+        String tempLocation = intent.getStringExtra("location");
+        if (tempLocation == null) {
+            tempLocation = "Unknown Location";
+            Log.e("EventDetailActivity", "Location extra is null. Using default.");
+        }
+        final String location = tempLocation;
+
+        String tempDescription = intent.getStringExtra("description");
+        if (tempDescription == null) {
+            tempDescription = "No description available.";
+            Log.e("EventDetailActivity", "Description extra is null. Using default.");
+        }
+        final String description = tempDescription;
+
+        // Retrieve image resources, falling back if null
         eventImages = intent.getIntArrayExtra("imageResources");
         if (eventImages == null) {
             eventImages = new int[]{R.drawable.ic_launcher_foreground};
