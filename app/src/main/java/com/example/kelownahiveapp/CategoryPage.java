@@ -78,7 +78,7 @@ public class CategoryPage extends AppCompatActivity {
 
         int columnWidth = (screenWidth - dpToPx(32)) / 2; // 2 columns
 
-        eventsContainer.setAdapter(new GridAdapter(this, events, columnWidth));
+        eventsContainer.setAdapter(new GridAdapter(this, events, columnWidth, currentCategory));
 
         eventsContainer.setOnItemClickListener((parent, view, position, id) -> {
             Event event = events.get(position);
