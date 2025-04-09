@@ -6,16 +6,18 @@ public class Event {
     private String location;
     private String description;
     private int[] imageResources;
+    private String category;
 
-    public Event(String title, String dateTime, String location, String description, int[] imageResources) {
+    public Event(String title, String dateTime, String location, String description,String category ,int[] imageResources) {
         this.title = title;
         this.dateTime = dateTime;
         this.location = location;
         this.description = description;
         this.imageResources = imageResources;
+        this.category = category;
     }
-    public Event(String title, String dateTime, String location, String description) {
-        this(title, dateTime, location, description, null);
+    public Event(String title, String dateTime, String location, String description, String category) {
+        this(title, dateTime, location, description,category ,null);
     }
     public String getTitle() {
         return title;
@@ -36,4 +38,5 @@ public class Event {
     public int[] getImageResources() {
         return imageResources;
     }
+    public String getCategory() {return category;}
 }
