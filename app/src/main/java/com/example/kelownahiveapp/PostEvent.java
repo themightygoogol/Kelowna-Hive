@@ -2,12 +2,16 @@ package com.example.kelownahiveapp;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -39,6 +43,8 @@ public class PostEvent extends AppCompatActivity {
     private CheckBox checkBoxRsvp;
     private Button buttonSubmit;
     private Spinner spinnerCategories;
+
+    private ImageButton backButton;
     private int selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute;
 
     private static final String EVENTS_FILE = "events.json";
@@ -71,6 +77,15 @@ public class PostEvent extends AppCompatActivity {
         spinnerCategories.setAdapter(adapter);
 
         editTextDate.setOnClickListener(v -> showDateTimePicker());
+
+        backButton = findViewById(R.id.home_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PostEvent.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         buttonSubmit.setOnClickListener(v -> {
 
