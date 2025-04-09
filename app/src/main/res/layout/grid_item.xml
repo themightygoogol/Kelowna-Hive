@@ -20,6 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:contentDescription="Event sticky note"
             android:src="@drawable/light_blue_sticky_note" />
 
         <TextView
@@ -32,40 +35,8 @@
             android:maxLines="2"
             android:padding="16dp"
             android:text="Event Name"
-            android:textColor="@color/black"
+            android:textColor="@android:color/black"
             android:textSize="18sp" />
     </FrameLayout>
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="120dp"-->
-<!--        android:padding="8dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/sticky"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:background="@drawable/light_blue_sticky_note"-->
-<!--            android:contentDescription="Category button"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/eventName"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="8dp"-->
-<!--            android:text="Event"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="16sp"-->
-<!--            android:shadowColor="#80000000"-->
-<!--            android:shadowDx="1"-->
-<!--            android:shadowDy="1"-->
-<!--            android:shadowRadius="2"-->
-<!--            android:maxWidth="200dp"-->
-<!--            android:ellipsize="end"/>-->
-<!--    </FrameLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

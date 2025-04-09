@@ -2,6 +2,7 @@ package com.example.kelownahiveapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,44 +44,52 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d("GridAdapter", "Creating view for position: " + position);
+
         if (convertView == null) {
+            Log.d("GridAdapter", "Inflating new view");
             convertView = LayoutInflater.from(context).inflate(R.layout.grid_item, parent, false);
-            convertView.setLayoutParams(new GridView.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    itemWidth // Use the predefined width
-            ));
         }
 
         ImageButton eventButton = convertView.findViewById(R.id.sticky);
         TextView title = convertView.findViewById(R.id.eventName);
 
-        // Make sure the button is properly configured
-        eventButton.setVisibility(View.VISIBLE);
-        eventButton.setScaleType(ImageView.ScaleType.FIT_XY);
-        eventButton.setClickable(false);
-        eventButton.setFocusable(false);
-
         Event event = getItem(position);
+        Log.d("GridAdapter", "Event title: " + event.getTitle());
+
+        // Set fixed dimensions
+        convertView.setLayoutParams(new GridView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                itemWidth // Use the passed column width
+        ));
+
         title.setText(event.getTitle());
 
+        // Debug image setting
         int randomNumber = (int)(Math.random() * 4);
-        switch (randomNumber) {
-            case 1:
-                eventButton.setImageResource(R.drawable.light_blue_sticky_note);
-                break;
-            case 2:
-                eventButton.setImageResource(R.drawable.purple_sticky_note);
-                break;
-            case 3:
-                eventButton.setImageResource(R.drawable.orange_sticky_note);
-                break;
-            default:
-                eventButton.setImageResource(R.drawable.yellow_sticky_note);
+        Log.d("GridAdapter", "Random number: " + randomNumber);
+
+        int resId;
+        switch(randomNumber) {
+            case 1: resId = R.drawable.light_blue_sticky_note; break;
+            case 2: resId = R.drawable.purple_sticky_note; break;
+            case 3: resId = R.drawable.orange_sticky_note; break;
+            default: resId = R.drawable.yellow_sticky_note;
         }
 
-        convertView.setOnClickListener(v -> {
+        Log.d("GridAdapter", "Setting drawable resource: " + resId);
+        eventButton.setImageResource(resId);
+        eventButton.setVisibility(View.VISIBLE);
+
+        eventButton.setOnClickListener(v -> {
             Intent intent = new Intent(context, EventDetailActivity.class);
-            intent.putExtra("EVENT", new Gson().toJson(event));
+
+            intent.putExtra("title", event.getTitle());
+            intent.putExtra("dateTime", event.getDateTime());
+            intent.putExtra("location", event.getLocation());
+            intent.putExtra("description", event.getDescription());
+            intent.putExtra("imageResources", event.getImageResources());
+
             context.startActivity(intent);
         });
 
