@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.gson.Gson;
+
 public class EventDetailActivity extends AppCompatActivity {
 
     private int[] eventImages = null;
