@@ -44,7 +44,7 @@ public class EventDetailActivity extends AppCompatActivity {
         String location = intent.getStringExtra("location");
         String description = intent.getStringExtra("description");
         // Use the key "category" (adjust if your adapter uses a different one)
-        String category = intent.getStringExtra("category");
+        String category = intent.getStringExtra("CATEGORY_NAME");
         eventImages = intent.getIntArrayExtra("imageResources");
         if (eventImages == null) {
             eventImages = new int[]{R.drawable.ic_launcher_foreground};
