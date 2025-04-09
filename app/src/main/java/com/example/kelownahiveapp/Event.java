@@ -19,6 +19,8 @@ public class Event {
     public Event(String title, String dateTime, String location, String description, String category) {
         this(title, dateTime, location, description,category ,null);
     }
+
+
     public String getTitle() {
         return title;
     }
