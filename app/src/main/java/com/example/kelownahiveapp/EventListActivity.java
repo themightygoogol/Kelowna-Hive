@@ -1,7 +1,9 @@
 package com.example.kelownahiveapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,9 +32,8 @@ public class EventListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewEvents);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // load data
+        // Load events from internal storage, or add mock events if none exist.
         eventList = loadEventsFromInternalStorage();
-        // If empty add mock events
         if (eventList == null || eventList.isEmpty()) {
             eventList = new ArrayList<>();
             eventList.add(new Event("Sunday Football Watch Party",
@@ -53,8 +54,32 @@ public class EventListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    // Force a refresh every time this activity resumes.
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<Event> updatedEvents = loadEventsFromInternalStorage();
+        if (updatedEvents != null) {
+            eventList.clear();
+            eventList.addAll(updatedEvents);
+            adapter.notifyDataSetChanged();
+        }
+    }
 
-//    Get Json and return arraylist of Event give empty list if none were saved
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            List<Event> updatedEvents = loadEventsFromInternalStorage();
+            if (updatedEvents != null) {
+                eventList.clear();
+                eventList.addAll(updatedEvents);
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    // Loads events from the internal storage JSON file
     private List<Event> loadEventsFromInternalStorage() {
         List<Event> events = new ArrayList<>();
         try {
@@ -75,7 +100,6 @@ public class EventListActivity extends AppCompatActivity {
                 events = gson.fromJson(json, eventListType);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             Log.e("EventListActivity", "Error loading events: " + e.getMessage());
         }
         return events;

@@ -2,20 +2,33 @@ package com.example.kelownahiveapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventDetailActivity extends AppCompatActivity {
 
     private int[] eventImages = null;
     private int ratingCount = 0; // initial rating
+    private static final String EVENTS_FILE = "events.json";
+    // Using event title as deletion key (assuming they are unique)
+    private String eventTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +37,11 @@ public class EventDetailActivity extends AppCompatActivity {
 
         // Retrieve event data from the intent extras
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
+        eventTitle = intent.getStringExtra("title");
         String dateTime = intent.getStringExtra("dateTime");
         String location = intent.getStringExtra("location");
         String description = intent.getStringExtra("description");
+        String category = intent.getStringExtra("category");
         eventImages = intent.getIntArrayExtra("imageResources");
         if (eventImages == null) {
             eventImages = new int[]{R.drawable.ic_launcher_foreground};
@@ -41,7 +55,7 @@ public class EventDetailActivity extends AppCompatActivity {
         TextView tvEventDescription = findViewById(R.id.tvEventDescription);
         final TextView tvRatingCount = findViewById(R.id.tvRatingCount);
 
-        tvEventTitle.setText(title);
+        tvEventTitle.setText(eventTitle);
         tvEventDateTime.setText(dateTime);
         tvEventLocation.setText(location);
         tvEventRSVP.setText("RSVP: Open to All");
@@ -91,12 +105,12 @@ public class EventDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Share functionality: share event details using an intent
+        // Share functionality: share event details via an intent
         Button btnShare = findViewById(R.id.btnShare);
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String shareText = title + "\n" + dateTime + "\n" + location + "\n" + description;
+                String shareText = eventTitle + "\n" + dateTime + "\n" + location + "\n" + description;
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
                 shareIntent.setType("text/plain");
@@ -120,5 +134,78 @@ public class EventDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Delete functionality: ensure a button with ID "btnDelete" exists in your layout.
+        Button btnDelete = findViewById(R.id.btnDelete);
+        if (btnDelete != null) {
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteEventByName();
+                    Toast.makeText(EventDetailActivity.this, "Event deleted.", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK); // Signal to EventListActivity to refresh its list.
+                    finish();
+                }
+            });
+        }
+    }
+
+    // Deletes the event from internal storage based on its title.
+    private void deleteEventByName() {
+        try {
+            File file = new File(getFilesDir(), EVENTS_FILE);
+            List<Event> events;
+            if (file.exists()) {
+                FileInputStream fis = new FileInputStream(file);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+                reader.close();
+                String json = sb.toString();
+                Gson gson = new Gson();
+                Type eventListType = new TypeToken<ArrayList<Event>>() {}.getType();
+                events = gson.fromJson(json, eventListType);
+                if (events == null) {
+                    events = new ArrayList<>();
+                }
+            } else {
+                events = new ArrayList<>();
+            }
+
+            // Debug: Log the stored event titles.
+            Log.d("DeleteEvent", "Attempting to delete event with title: " + eventTitle);
+            for (Event e : events) {
+                Log.d("DeleteEvent", "Stored event title: " + e.getTitle());
+            }
+
+            // Remove the event matching the title (assumes title uniqueness).
+            boolean removed = false;
+            for (int i = 0; i < events.size(); i++) {
+                if (events.get(i).getTitle() != null && events.get(i).getTitle().equals(eventTitle)) {
+                    events.remove(i);
+                    removed = true;
+                    Log.d("DeleteEvent", "Removed event with title: " + eventTitle);
+                    break;
+                }
+            }
+            if (!removed) {
+                Log.d("DeleteEvent", "No event found with title: " + eventTitle);
+            }
+
+            // Save the updated events back to internal storage.
+            Gson gson = new Gson();
+            String newJson = gson.toJson(events);
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(newJson.getBytes());
+            fos.close();
+            Log.d("DeleteEvent", "Updated events after deletion: " + newJson);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("DeleteEvent", "Error deleting event: " + e.getMessage());
+            Toast.makeText(this, "Error deleting event: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 }

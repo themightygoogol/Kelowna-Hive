@@ -53,6 +53,11 @@ public class PostEvent extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+//        File file = new File(getFilesDir(), EVENTS_FILE);
+//        if (file.exists()) {
+//            file.delete();
+//        }
+        
         editTextTitle = findViewById(R.id.editText_title);
         editTextDate = findViewById(R.id.editText_date);
         editTextLocation = findViewById(R.id.editText_location);
